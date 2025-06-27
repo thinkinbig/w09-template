@@ -1,0 +1,89 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.4.5'
+	id 'io.spring.dependency-management' version '1.1.7'
+	id 'checkstyle'
+	id 'nebula.lint' version "18.1.0"
+	id 'com.github.spotbugs' version "6.2.0"
+	id 'jacoco'
+}
+
+group = 'de.tum.aet.devops25'
+version = '0.0.1'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	// DB dependencies
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	runtimeOnly 'org.postgresql:postgresql'
+
+	spotbugs 'com.github.spotbugs:spotbugs:4.9.3'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+checkstyle {
+    toolVersion = "10.12.4"
+}
+
+tasks.withType(Checkstyle) {
+    reports {
+        sarif.required = true
+		html.required = true
+    }
+}
+
+gradleLint {
+	alwaysRun = false
+}
+
+// the only working workaround for the spotbugs plugin in multi-project builds
+def classLoader = plugins['com.github.spotbugs'].class.classLoader
+def SpotBugsTask = classLoader.findLoadedClass( 'com.github.spotbugs.snom.SpotBugsTask' )
+def SpotBugsEffort = classLoader.findLoadedClass( 'com.github.spotbugs.snom.Effort' )
+def SpotBugsConfidence = classLoader.findLoadedClass( 'com.github.spotbugs.snom.Confidence' )
+
+spotbugs {
+	effort = SpotBugsEffort.MORE
+    reportLevel = SpotBugsConfidence.HIGH
+	ignoreFailures = false
+    showProgress = false
+}
+
+spotbugsMain {
+    reports {
+        html {
+            required = true
+            outputLocation = file("$buildDir/reports/spotbugs/main/spotbugs.html")
+        }
+    }
+}
+
+test {
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    dependsOn test
+	reports {
+        xml.required = true
+        html.required = true
+    }
+}
+

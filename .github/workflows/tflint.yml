@@ -1,0 +1,13 @@
+name: terraform linting using tflint
+
+on:
+  workflow_call:
+
+jobs:
+  tflint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        name: Checkout source code
+# TODO

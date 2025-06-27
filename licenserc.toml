@@ -1,0 +1,66 @@
+# REUSE-IgnoreStart
+inlineHeader = """
+Copyright © {{ props.copyrightOwner }} {{ attrs.git_file_created_year }} - {{ attrs.git_file_modified_year }}
+
+Licensed under the MIT License
+
+Authors: TODO
+
+SPDX-FileCopyrightText: {{ attrs.git_file_created_year }} {{ props.copyrightOwner }}
+
+SPDX-License-Identifier: MIT
+"""
+# REUSE-IgnoreEnd
+
+# You can exclude files and folders
+excludes = [
+    ".flake8",
+    ".git/*",
+    ".gitkeep",
+    ".gradle/*",
+    ".npmrc",
+    ".vscode/*",
+    "*.ico",
+    "*.j2",
+    "*.jar",
+    "*.json",
+    "*.json5",
+    "*.jsonc",
+    "*.lock",
+    "*.png",
+    "*.pub",
+    "*.svelte",
+    "*.txt",
+    "build/*",
+    "CHANGELOG.md",
+    "CODEOWNERS",
+    "gradle/*",
+    "gradlew.bat",
+    "gradlew",
+    "LICENSE.md",
+    "LICENSE",
+    "LICENSES/*",
+    "node_modules/*",
+]
+
+additionalHeaders = ["licenseheaders.toml"]
+useDefaultExcludes = false
+
+[mapping.NEW_SCRIPT]
+extensions = ["dockerignore", "gitignore", "gitattributes"]
+
+[mapping.JINJA]
+extensions = ["jinja"]
+
+[mapping.MARKDOWN]
+extensions = ["md"]
+
+# Define variables for your file header
+[properties]
+copyrightOwner = "TODO"
+authors = "TODO"
+
+# Activate git features to detect when a file has been changed
+[git]
+ignore = 'auto'
+attrs = 'enable'

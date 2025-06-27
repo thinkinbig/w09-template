@@ -1,0 +1,52 @@
+services:
+  server:
+    image: ghcr.io/aet-devops25/w07-solution/server:latest
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - DATABASE_URL=jdbc:postgresql://database:5432/mensa
+      - LLM_SERVICE_URL=http://llm:5000
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
+  database:
+    image: postgres:17
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER:-postgres}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-supersecret}
+      - POSTGRES_DB=${POSTGRES_DB:-mensa}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  client:
+    image: ghcr.io/aet-devops25/w07-solution/client:latest
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - PUBLIC_API_URL=${PUBLIC_API_URL:-http://localhost:8080/api}
+    depends_on:
+      - server
+    restart: unless-stopped
+
+  llm:
+    image: ghcr.io/aet-devops25/w07-solution/llm:latest
+    build:
+      context: ./llm
+      dockerfile: Dockerfile
+    environment:
+      - CHAIR_API_KEY=${CHAIR_API_KEY:-your_api_key_here}
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
+
+volumes:
+  db_data:

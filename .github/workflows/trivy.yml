@@ -1,0 +1,11 @@
+name: container image vulnerability scanning and SBOM creation
+
+on:
+  workflow_call:
+
+jobs:
+  create-sbom:
+    runs-on: ubuntu-latest
+
+    steps: []
+# TODO

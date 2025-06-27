@@ -1,0 +1,34 @@
+[NEW_SCRIPT]
+firstLine = ''
+endLine = "\n"
+beforeEachLine = '# '
+afterEachLine = ''
+allowBlankLines = false
+multipleLines = false
+padLines = false
+skipLinePattern = '^#!.*$'
+firstLineDetectionPattern = '#.*$'
+lastLineDetectionPattern = '#.*$'
+
+[JINJA]
+firstLine = ''
+endLine = "\n"
+beforeEachLine = '# '
+afterEachLine = ''
+allowBlankLines = false
+multipleLines = false
+padLines = false
+skipLinePattern = '^#!.*$'
+firstLineDetectionPattern = '#.*$'
+lastLineDetectionPattern = '#.*$'
+
+[MARKDOWN]
+firstLine = '<!--'
+endLine = "-->\n"
+beforeEachLine = ''
+afterEachLine = ''
+allowBlankLines = false
+multipleLines = true
+padLines = false
+firstLineDetectionPattern = '\s*<!--.*$'
+lastLineDetectionPattern = '\s*-->.*$'

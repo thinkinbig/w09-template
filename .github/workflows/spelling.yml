@@ -1,0 +1,12 @@
+name: spellcheck using cspell and typos
+
+on:
+  workflow_call:
+
+jobs:
+  spellcheck:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+# TODO

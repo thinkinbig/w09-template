@@ -1,0 +1,14 @@
+name: static security scanning using semgrep
+
+on:
+  workflow_call:
+
+
+jobs:
+  semgrep:
+    name: semgrep-oss/scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+# TODO

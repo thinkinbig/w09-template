@@ -1,0 +1,8 @@
+name: devops demo CI parent workflow
+
+on:
+  push: { branches: [main] }
+  pull_request:
+
+jobs: []
+# TODO
